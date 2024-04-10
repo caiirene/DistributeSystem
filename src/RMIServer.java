@@ -25,7 +25,7 @@ public class RMIServer {
     }
 
     public void startServers() {
-        int port = 2323;
+        int port = 2000;
         for (int i = 0; i < 5; i++) {
             try {
                 RMIInterface obj = new RMIImplement(this, port); // 使用 server 实例

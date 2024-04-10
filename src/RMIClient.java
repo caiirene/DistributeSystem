@@ -20,7 +20,7 @@ public class RMIClient {
      */
     public static void main(String[] args) {
 
-        int port = 2323;
+        int port = 2000;
 
         for (int i = 0; i < 5; i++) {
             RMIInterface stub = null;
@@ -156,23 +156,6 @@ public class RMIClient {
      * @param commandParts The parts of the command to execute.
      * @return The result of the remote method call.
      */
-//    public static String callRemoteMethod(RMIInterface stub, String[] commandParts) {
-//        try {
-//            String action = commandParts[0];
-//            switch (action) {
-//                case "PUT":
-//                    return stub.put(commandParts[1], commandParts[2]);
-//                case "GET":
-//                    return stub.get(commandParts[1]);
-//                case "DELETE":
-//                    return stub.delete(commandParts[1]);
-//                default:
-//                    return "Unrecognized command: " + action;
-//            }
-//        } catch (RemoteException e) {
-//            return "Remote exception: " + e.getMessage();
-//        }
-//    }
     public static String callRemoteMethod(RMIInterface stub, String[] commandParts) {
         try {
             String action = commandParts[0];
