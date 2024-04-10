@@ -44,18 +44,38 @@ public class RMIClient {
             }
         }
         port = 2323;
-        System.out.println(stubsList);
 
         RMIClient client = new RMIClient();
 
-        for (RMIInterface stub : stubsList) {
+        System.out.println("RMIClient: First five try start.");
+        for (int i = 1; i <= 5; i++) {
+            int stubIndex = (i - 1) % stubsList.size(); // 计算当前使用的 stub 索引
+            RMIInterface stub = stubsList.get(stubIndex); // 获取当前使用的 stub
             try {
-                System.out.println("Testing stub on port: " + (port + stubsList.indexOf(stub)));
-                client.tryFive(stub);
+                System.out.println(stub.put("" + i*1000, "" + i*-20));
             } catch (RemoteException e) {
-                System.out.println("RMIClient error: tryFive unsuccessful for stub on port " + (port + stubsList.indexOf(stub)));
+                System.out.println("RMIClient error: tryFive unsuccessful for stub on port " + (port + stubIndex) + " (Test " + i + ")");
             }
         }
+        for (int i = 1; i <= 5; i++) {
+            int stubIndex = (i - 1) % stubsList.size(); // 计算当前使用的 stub 索引
+            RMIInterface stub = stubsList.get(stubIndex); // 获取当前使用的 stub
+            try {
+                System.out.println(stub.get("" + i*1000));
+            } catch (RemoteException e) {
+                System.out.println("RMIClient error: tryFive unsuccessful for stub on port " + (port + stubIndex) + " (Test " + i + ")");
+            }
+        }
+        for (int i = 1; i <= 5; i++) {
+            int stubIndex = (i - 1) % stubsList.size(); // 计算当前使用的 stub 索引
+            RMIInterface stub = stubsList.get(stubIndex); // 获取当前使用的 stub
+            try {
+                System.out.println(stub.delete("" + i*1000));
+            } catch (RemoteException e) {
+                System.out.println("RMIClient error: tryFive unsuccessful for stub on port " + (port + stubIndex) + " (Test " + i + ")");
+            }
+        }
+        System.out.println("Five try over.");
 
         boolean stop = false;
         Scanner scanner = new Scanner(System.in);
@@ -100,8 +120,12 @@ public class RMIClient {
             System.out.println("RMIClient: First five try start.");
             for (int i = 1; i <= 5; i++) {
                 System.out.println(stub.put("" + i*1000, "" + i*-20));
-                System.out.println(stub.get("" + i*1000));
-                System.out.println(stub.delete("" + i*1000));
+            }
+            for (int i = 1; i <= 5; i++) {
+                System.out.println(stub.put("" + i*1000, "" + i*-20));
+            }
+            for (int i = 1; i <= 5; i++) {
+                System.out.println(stub.put("" + i*1000, "" + i*-20));
             }
             System.out.println("RMIClient: First five try end.");
         } catch (RemoteException e) {

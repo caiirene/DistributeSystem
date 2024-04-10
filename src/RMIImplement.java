@@ -51,7 +51,6 @@ public class RMIImplement extends UnicastRemoteObject implements RMIInterface {
                 lock.unlock();
                 return false;
             }
-            System.out.println("port "+port+" accept put "+key+"："+value);
             return true;
         } else {
             System.out.println("port "+port+" because of some reason, maybe lock, can't put.");
@@ -80,8 +79,6 @@ public class RMIImplement extends UnicastRemoteObject implements RMIInterface {
                 lock.unlock();
             }
         }
-        System.out.println("------------------"+"\n"+
-                "port "+port+" now dictionary: "+dictionary);
     }
     /**
      * Puts a key-value pair into the dictionary.
@@ -125,7 +122,6 @@ public class RMIImplement extends UnicastRemoteObject implements RMIInterface {
         }
         return "RMIImplement: GET success for key (" + key + ")" + " with value (" + dictionary.get(key) + ")"
                 + "Current time: " + sdf.format(new Date(System.currentTimeMillis()));
-        //return "RMIImplement: GET success for key (" + key + ")" + " with value (" + dictionary.get(key) + ")";
     }
     /**
      * Deletes a key-value pair from the dictionary.
