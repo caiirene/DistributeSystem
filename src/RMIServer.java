@@ -10,20 +10,25 @@ public class RMIServer {
 
     private ArrayList<RMIInterface> serverStubs;
 
+    /**
+     * constructor
+     */
     public RMIServer() {
         serverStubs = new ArrayList<>();
     }
 
     /**
-     * The main method that starts the server.
+     * The main method that starts the RMIServer.
      *
-     * @param args Command line arguments, expects a single argument: the port number.
+     * @param args Command line arguments (not used in this implementation).
      */
     public static void main(String[] args) {
         RMIServer server = new RMIServer(); // 创建 RMIServer 实例
         server.startServers(); // 启动服务器
     }
-
+    /**
+     * Starts multiple RMI server instances, each on a different port, and binds remote objects to the RMI registry.
+     */
     public void startServers() {
         int port = 2000;
         for (int i = 0; i < 5; i++) {
@@ -39,7 +44,15 @@ public class RMIServer {
             }
         }
     }
-
+    /**
+     * Asks all server instances whether they can accept a proposed operation (PUT or DELETE).
+     *
+     * @param key The key to be put or deleted.
+     * @param value The value to be associated with the key (ignored for DELETE operation).
+     * @param operation The type of operation ("put" or "delete").
+     * @return {@code true} if all server instances agree to the update,
+     *         {@code false} otherwise (if any server instance disagrees or cannot be contacted).
+     */
     public boolean askAllServer(String key, String value, String operation) {
         for (RMIInterface stub : serverStubs) {
             try {
@@ -53,8 +66,13 @@ public class RMIServer {
         }
         return true; // 所有服务器实例都同意更新
     }
-
-
+    /**
+     * Instructs all server instances to commit the actual update (PUT or DELETE) to their dictionaries.
+     *
+     * @param key The key to be put or deleted.
+     * @param value The value to be associated with the key (ignored for DELETE operation).
+     * @param operation The type of operation ("put" or "delete").
+     */
     public void allServerDoRealUpdate(String key, String value, String operation) {
         for (RMIInterface stub : serverStubs) {
             try {
