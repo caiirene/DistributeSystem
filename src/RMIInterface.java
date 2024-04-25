@@ -1,5 +1,8 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * RMIInterface defines the methods available for the remote dictionary service.
  */
@@ -50,4 +53,13 @@ public interface RMIInterface extends Remote {
      * @throws RemoteException if a remote communication error occurs.
      */
     void finallyGotCommitSoReallyUpdate(String key, String value, String operation)throws RemoteException;
+
+    String promise(int proposalNumber) throws RemoteException;
+
+    String accepted(int promiseNum, String val) throws RemoteException;
+
+
+    ConcurrentHashMap<String, String> getDictionary()throws RemoteException;;
+
+    void updateDictionary(Map<String, String> commonDictionary) throws RemoteException;
 }
